@@ -6,8 +6,11 @@
 package mx.com.solutics.arrow.business;
 
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import mx.com.solutics.arrow.dto.estados.EstadoDTO;
+import mx.com.solutics.arrow.bo.estados.EstadoDTO;
+import mx.com.solutics.arrow.bo.estados.MunicipioDTO;
+import mx.com.solutics.arrow.facade.EstadoFacade;
 
 /**
  *
@@ -16,7 +19,15 @@ import mx.com.solutics.arrow.dto.estados.EstadoDTO;
 @Stateless
 public class EstadosMunicipiosBusiness {
 
+    @EJB
+    EstadoFacade estadoFacade;
+
     public List<EstadoDTO> obtenerEstados() {
+        List<EstadoDTO> estados = estadoFacade.obtenerEstados();
+        return estados;
+    }
+
+    public List<MunicipioDTO> obtenerMunicipios(Integer idEstado) {
 
         return null;
     }
