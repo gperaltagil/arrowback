@@ -6,26 +6,25 @@
 package mx.com.solutics.arrow.bo.estados;
 
 import mx.com.solutics.arrow.jpa.CatalogoUsuario;
-import mx.com.solutics.arrow_config.jpa.Credenciales;
 
 /**
  *
  * @author Gisel Peralta Gil <gperalta at smartsoftamerica.com.mx>
  */
 public class CatalogoUsuariosBO {
-    
+
     private CatalogoUsuario catalogoUsuario;
-    private Credenciales credenciales;
+    private CredencialesBO credenciales;
 
     public CatalogoUsuariosBO(CatalogoUsuario catalogoUsuario) {
         this.catalogoUsuario = catalogoUsuario;
-    }    
+    }
 
-    public Credenciales getCredenciales() {
+    public CredencialesBO getCredenciales() {
         return credenciales;
     }
 
-    public void setCredenciales(Credenciales credenciales) {
+    public void setCredenciales(CredencialesBO credenciales) {
         this.credenciales = credenciales;
     }
 
@@ -36,5 +35,5 @@ public class CatalogoUsuariosBO {
     public void setCatalogoUsuario(CatalogoUsuario catalogoUsuario) {
         this.catalogoUsuario = catalogoUsuario;
     }
-    
+
 }
