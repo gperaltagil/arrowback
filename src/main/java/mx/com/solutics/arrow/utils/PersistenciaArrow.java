@@ -26,16 +26,13 @@ public class PersistenciaArrow implements Serializable{
     public EntityManager getEm() {
         return em;
     }
-
-    public void setEm(EntityManager em) {
-        this.em = em;
+    
+    public EntityManager getEm(Integer tenant) {
+        em.setProperty("tenant.id", tenant);
+        return em;
     }
 
     public EntityManager getEmConfig() {
         return emConfig;
-    }
-
-    public void setEmConfig(EntityManager emConfig) {
-        this.emConfig = emConfig;
     }
 }
