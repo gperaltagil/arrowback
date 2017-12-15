@@ -5,6 +5,7 @@
  */
 package mx.com.solutics.arrow.api;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import mx.com.solutics.arrow.bo.estados.CatalogoUsuariosBO;
 import mx.com.solutics.arrow.bo.estados.CredencialesBO;
 import mx.com.solutics.arrow.business.CatalogoUsuarioBusiness;
+import mx.com.solutics.arrow.jpa.CatalogoUsuario;
 import mx.com.solutics.arrow_config.business.CredencialesBusiness;
 
 /**
@@ -36,7 +38,7 @@ public class CredencialesService {
     @GET
     @Path("/obtenerCredenciales/{correo}/{contrasena}")
     @Produces({MediaType.APPLICATION_JSON})
-    public CredencialesBO obtenerEstados(@PathParam("correo") String correo, @PathParam("contrasena") String contrasena) {
+    public CredencialesBO verificarCredenciales(@PathParam("correo") String correo, @PathParam("contrasena") String contrasena) {
         return credencialesBusiness.verificarUsuario(correo, contrasena);
     }
 
@@ -44,8 +46,8 @@ public class CredencialesService {
     @Path("/agregarUsuario")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public CatalogoUsuariosBO agregarUsuario(CatalogoUsuariosBO usuariosBO) {
-        CatalogoUsuariosBO usuario = catalogoUsuarioBusiness.agregarUsuario(usuariosBO);
+    public CatalogoUsuariosBO agregarUsuario(CatalogoUsuariosBO usuariosBO, int tenant) {
+        CatalogoUsuariosBO usuario = catalogoUsuarioBusiness.agregarUsuario(usuariosBO.getCatalogoUsuario(), tenant);
         usuariosBO.getCredenciales().getCredenciales().setUsuario(usuario.getCatalogoUsuario().getId());
         credencialesBusiness.agregarUsuario(usuariosBO.getCredenciales());
         return usuario;
@@ -55,8 +57,29 @@ public class CredencialesService {
     @Path("/actualizarUsuario")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public CatalogoUsuariosBO actualizarUsuario(CatalogoUsuariosBO usuariosBO) {
-        return catalogoUsuarioBusiness.agregarUsuario(usuariosBO);
+    public CatalogoUsuariosBO actualizarUsuario(CatalogoUsuariosBO usuariosBO, int tenant) {
+        return catalogoUsuarioBusiness.agregarUsuario(usuariosBO.getCatalogoUsuario(), tenant);
     }
 
+    @PUT
+    @Path("/eliminarUsuario")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public CatalogoUsuariosBO eliminarUsuario(CatalogoUsuario usuario) {
+        return catalogoUsuarioBusiness.eliminarUsuario(usuario);
+    }
+    
+    @GET
+    @Path("/obtenerUsuarios")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<CatalogoUsuariosBO> obtenerUsuariosActivos() {
+        return catalogoUsuarioBusiness.obtenerUsuariosActivos();
+    }
+    
+    @GET
+    @Path("/obtenerUsuarioId/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public CatalogoUsuariosBO obtenerUsuarioId(@PathParam("id") int id) {
+        return catalogoUsuarioBusiness.obtenerUsuarioID(id);
+    }
 }
