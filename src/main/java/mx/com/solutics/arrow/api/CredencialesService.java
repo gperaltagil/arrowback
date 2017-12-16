@@ -43,10 +43,10 @@ public class CredencialesService {
     }
 
     @POST
-    @Path("/agregarUsuario")
+    @Path("/agregarUsuario/{tenant}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public CatalogoUsuariosBO agregarUsuario(CatalogoUsuariosBO usuariosBO, int tenant) {
+    public CatalogoUsuariosBO agregarUsuario(CatalogoUsuariosBO usuariosBO, @PathParam("tenant") Integer tenant) {
         CatalogoUsuariosBO usuario = catalogoUsuarioBusiness.agregarUsuario(usuariosBO.getCatalogoUsuario(), tenant);
         usuariosBO.getCredenciales().getCredenciales().setUsuario(usuario.getCatalogoUsuario().getId());
         credencialesBusiness.agregarUsuario(usuariosBO.getCredenciales());
@@ -54,10 +54,10 @@ public class CredencialesService {
     }
 
     @PUT
-    @Path("/actualizarUsuario")
+    @Path("/actualizarUsuario/{tenant}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public CatalogoUsuariosBO actualizarUsuario(CatalogoUsuariosBO usuariosBO, int tenant) {
+    public CatalogoUsuariosBO actualizarUsuario(CatalogoUsuariosBO usuariosBO, @PathParam("tenant") Integer tenant) {
         return catalogoUsuarioBusiness.agregarUsuario(usuariosBO.getCatalogoUsuario(), tenant);
     }
 
